@@ -21,6 +21,26 @@
         .header-premium {
             background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); /* Slate 800 to 900 */
         }
+        
+        /* Styles for price reveal animation */
+        #price-box #price-text {
+            transform: scale(0.8);
+            opacity: 0;
+            transition: opacity 0.5s ease-out 0.4s, transform 0.5s ease-out 0.4s;
+        }
+        #price-box.animate #price-text {
+            opacity: 1;
+            transform: scale(1);
+        }
+        #price-box #cover-left, #price-box #cover-right {
+            transition: transform 0.8s cubic-bezier(0.86, 0, 0.07, 1);
+        }
+        #price-box.animate #cover-left {
+            transform: translateX(-100%);
+        }
+        #price-box.animate #cover-right {
+            transform: translateX(100%);
+        }
     </style>
 </head>
 <body class="bg-slate-900">
@@ -29,7 +49,7 @@
         <!-- Header -->
         <div class="header-premium text-white p-5 text-center">
             <div class="flex items-center justify-center space-x-3 space-x-reverse mb-2">
-                <svg xmlns="http://www.w.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-patch-check-fill text-amber-400" viewBox="0 0 16 16">
+                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-patch-check-fill text-amber-400" viewBox="0 0 16 16">
                   <path d="M10.067.87a2.89 2.89 0 0 0-4.134 0l-.622.638-.89-.011a2.89 2.89 0 0 0-2.924 2.924l.01.89-.638.622a2.89 2.89 0 0 0 0 4.134l.638.622-.011.89a2.89 2.89 0 0 0 2.924 2.924l.89.01.622.638a2.89 2.89 0 0 0 4.134 0l.622-.638.89.011a2.89 2.89 0 0 0 2.924-2.924l-.01-.89.638-.622a2.89 2.89 0 0 0 0-4.134l-.638-.622.011-.89a2.89 2.89 0 0 0-2.924-2.924l-.89-.01-.622-.638zm-2.217 8.585-2.146-2.147a.5.5 0 0 1 .708-.708l1.79 1.79 3.545-3.545a.5.5 0 0 1 .708.708l-3.9 3.9z"/>
                 </svg>
                 <h1 class="text-xl font-black tracking-wide">اطلاعیه رسمی و مهم</h1>
@@ -45,9 +65,15 @@
                 ما عمیقاً به بازخورد شما ایمان داریم و پیشنهاداتتان را سنگ بنای تصمیمات خود قرار می‌دهیم. در پی تحلیل دقیق درخواست‌های شما و به مناسبت <strong>✨ جشنواره شگفت‌انگیز پایان تابستان ✨</strong>، یک تغییر استراتژیک را اعلام می‌کنیم. هدف اصلی ما از این اقدام، فراهم کردن یک فضای رقابتی قدرتمند برای شما در بازار است تا با اطمینان کامل فعالیت کنید. به همین منظور، <strong class="text-slate-900">ما تمام هزینه‌های تبلیغاتی خود را متوقف کرده و این بودجه را به طور کامل، در قالب کاهش چشمگیر قیمت‌ها، به شما عزیزان تخصیص می‌دهیم.</strong> از این پس، شما سفیران برند ما هستید و رشد این خانواده را به شما واگذار می‌کنیم.
             </p>
             
-            <div class="bg-slate-50 p-4 rounded-lg border border-slate-200 mb-5 text-center">
+            <div class="bg-slate-50 p-4 rounded-lg border border-slate-200 mb-5 text-center overflow-hidden">
                 <p class="text-slate-700 mb-2 text-sm">نرخ جدید خدمات با حفظ کامل کیفیت:</p>
-                <p class="font-black text-3xl text-slate-900">۱,۱۵۰ <span class="text-base font-bold">تومان</span></p>
+                <div id="price-box" class="h-12 relative flex items-center justify-center my-1">
+                    <div id="price-text">
+                        <p class="font-black text-3xl text-slate-900">۱,۱۵۰ <span class="text-base font-bold">تومان</span></p>
+                    </div>
+                    <div id="cover-left" class="absolute top-0 left-0 w-1/2 h-full bg-slate-50 border-r border-slate-300 z-10"></div>
+                    <div id="cover-right" class="absolute top-0 right-0 w-1/2 h-full bg-slate-50 border-l border-slate-300 z-10"></div>
+                </div>
                  <p class="text-slate-500 text-xs mt-2">(به ازای هر گیگابایت)</p>
             </div>
 
@@ -117,9 +143,17 @@
         </div>
     </div>
 
+<script>
+    window.addEventListener('load', () => {
+        setTimeout(() => {
+            const priceBox = document.getElementById('price-box');
+            if(priceBox) {
+                priceBox.classList.add('animate');
+            }
+        }, 2000); // 2000 milliseconds = 2 seconds
+    });
+</script>
+
 </body>
 </html>
-
-
-
 
